@@ -1,5 +1,5 @@
 ## [React with TypeScript](https://www.inflearn.com/course/react-with-typescript/dashboard)
-### <[실습 환경 만들기](https://ko.reactjs.org/docs/static-type-checking.html#using-typescript-with-create-react-app)>
+### <[실습 환경](https://ko.reactjs.org/docs/static-type-checking.html#using-typescript-with-create-react-app)>
 ``npx create-react-app react-typescript --template typescript``   
 
 #### 기본 설정 파일 ([참고](https://github.com/Microsoft/TypeScript-React-Starter#typescript-react-starter))
@@ -38,9 +38,41 @@ react-typescript/
 #### 기본 커맨드
 - ``npm start`` : Starts the development server.
 - ``npm run build`` : Bundles the app into static files for production.
-- ``npm test``
-    Starts the test runner.
+- ``npm test`` : Starts the test runner.
+- ``npm run eject`` : Removes this tool and copies build dependencies, configuration files and scripts into the app directory. If you do this, you can’t go back!
 
-  npm run eject
-    Removes this tool and copies build dependencies, configuration files
-    and scripts into the app directory. If you do this, you can’t go back!
+</br>
+
+### \<Component 생성>
+- 종류
+  > - React.Component 상속
+  > - React.PureComponent 상속
+  > - Stateless Component : Component 내부에서 state 관리 할 필요 없는경우
+
+#### React.Component 상속
+- props와 state의 interface 지정 해줘야 함
+```js
+/*
+* App.tsx
+*/
+import React from 'react';
+import './App.css';
+
+class App extends React.Component<{name : string;}, {age : number;}> {
+  constructor(props : {name : string;}) {
+    super(props);
+    this.state = {
+      age : 35
+    };
+  }
+  render() {
+    return (
+      <div className="App">
+        ...
+      </div>
+    );
+  }
+}
+
+export default App;
+```
