@@ -47,7 +47,9 @@ react-typescript/
 - 종류
   > - React.Component 상속
   > - React.PureComponent 상속
-  > - Stateless Component : Component 내부에서 state 관리 할 필요 없는경우
+  > - Stateless Component(function)
+  >   - Component 내부에서 state 사용 불가
+  >   - Lifecycle 지원 안함
 
 #### React.Component 상속
 - props와 state의 interface 지정 해줘야 함
@@ -58,8 +60,16 @@ react-typescript/
 import React from 'react';
 import './App.css';
 
-class App extends React.Component<{name : string;}, {age : number;}> {
-  constructor(props : {name : string;}) {
+export interface AppProps {
+  name : string;
+}
+
+interface AppState {
+  age : number;
+}
+
+class App extends React.Component<AppProps, AppState> {
+  constructor(props : AppProps) {
     super(props);
     this.state = {
       age : 35
@@ -68,7 +78,8 @@ class App extends React.Component<{name : string;}, {age : number;}> {
   render() {
     return (
       <div className="App">
-        ...
+        {this.props.name}, {this.state.age}
+        <StatelessComponent name="Anna"/>  //Stateless Component
       </div>
     );
   }
@@ -76,3 +87,46 @@ class App extends React.Component<{name : string;}, {age : number;}> {
 
 export default App;
 ```
+
+#### Stateless Component
+```
+const StatelessComponent :React.SFC<AppProps> = () => {
+  return (
+    <h2>{props.name}</h2>
+  );
+}
+```
+
+</br>
+
+### [\<Lifecycle>](https://www.zerocho.com/category/React/post/579b5ec26958781500ed9955)
+- Component를 class로 만들때 사용
+#### 종류
+- Component 생성, 마운트 관련 함수
+  - ``constructor()``
+  - ``componentWillMount()``
+    - Component 처음 실행될 때
+    - context, defaultProps, state 저장
+    - 주의) props나 state 변경하면 안되고 render 전이기 때문에 DOM에 접근 불가
+  - ``render()``
+    - Component를 DOM에 render
+  - ``componentDidMount()``
+    - 마운트 완료된 시점
+    - DOM 접근 가능
+    - AJAX 요청, setTimeout, setInterval 같은 동작 수행
+  - ``componentWillUnmount()``
+    - Component 제거
+- Component의 props 변경 관련 함수
+  - ``componentWillReceiveProps()``
+    - props 업데이트 감지 후 처음으로 호출됨
+  - ``shouldComponentUpdate()``
+    - return false하면 render 취소
+    - 주로 성능 최적화 작업
+  - ``componentWillUpdate()``
+    - 주의) 여기서 state 변경하면 props 업데이트 전에 또 shouldComponentUpdate가 발생하므로 state 변경 하지 말것
+  - ``render()``
+    - 변경된 props로 DOM에 업데이트 작업
+  - ``componentDidUpdate()``
+    - 업데이트 완료 시점에 호출
+    - DOM 접근 가능
+
