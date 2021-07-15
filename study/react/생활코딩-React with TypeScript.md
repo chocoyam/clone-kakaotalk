@@ -161,7 +161,44 @@ const StatelessComponent : React.SFC<AppProps> = () => {
 
 </br>
 
-### \<Event>
+### \<Component에 Event 연결>
+- DOM의 event명은 JSX에서는 낙타표기법으로
+  - Ex) DOM onclick => JSX onClick
+- event 처리할 함수 연결
+- event 처리 함수 내부에서 this를 사용한다면 scope 때문에 constructor에서 함수 binding 해줘야함 (?)
+```js
+/*
+* App.tsx
+*/
+...
+class App extends React.Component<AppProps, AppState> {
+  constructor(props : AppProps) {
+    super(props);
+    this.state = {
+      age : 35
+    };
+    this._rollback = this._rollback.bind(this);
+  }
+  render() {
+    return (
+      <div className="App">
+        {this.props.name}, {this.state.age}
+        <button onClick={this._rollback}>회춘</button>
+        <StatelessComponent name="Anna"/>  //Stateless Component
+      </div>
+    );
+  }
+  private _rollback() : void {
+    this.setState({
+      age : 25
+    });
+  }
+}
+
+export default App;
+```
+
+</br>
 
 ### \<Default Props>
 - props 값이 안들어오는 경우에 default로 설정해줄 값 지정하는 방법
@@ -231,3 +268,7 @@ const StatelessComponent : React.SFC<AppProps> = {name, company = "Home"} => {
 };
 ...
 ```
+
+</br>
+
+### \<Component 변경하기>
