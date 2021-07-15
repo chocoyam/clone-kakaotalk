@@ -87,14 +87,35 @@ class App extends React.Component<AppProps, AppState> {
 
 export default App;
 ```
+```js
+/*
+* index.tsx
+*/
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import App from './App';
+import registerServiceWorker from './registerServiceWorker';
+import './index.css';
+
+ReactDOM.render(
+  <App name="Mark"/>
+  document.getElementById('root') as HTMLElement
+);
+registerServiceWorker();
+```
 
 #### Stateless Component
-```
-const StatelessComponent :React.SFC<AppProps> = () => {
+```js
+/*
+* App.tsx
+*/
+...
+const StatelessComponent : React.SFC<AppProps> = () => {
   return (
     <h2>{props.name}</h2>
   );
 }
+...
 ```
 
 </br>
@@ -104,7 +125,7 @@ const StatelessComponent :React.SFC<AppProps> = () => {
 #### 종류
 - Component 생성, 마운트 관련 함수
   - ``constructor()``
-  - ``componentWillMount()``
+  - ``componentWillMount()``[deprecated_17]
     - Component 처음 실행될 때
     - context, defaultProps, state 저장
     - 주의) props나 state 변경하면 안되고 render 전이기 때문에 DOM에 접근 불가
@@ -117,16 +138,96 @@ const StatelessComponent :React.SFC<AppProps> = () => {
   - ``componentWillUnmount()``
     - Component 제거
 - Component의 props 변경 관련 함수
-  - ``componentWillReceiveProps()``
+  - ``componentWillReceiveProps()``[deprecated_17]
     - props 업데이트 감지 후 처음으로 호출됨
+    - state 업데이트 했을때 호출되지 않음
+    - 이 단계에서 setState()를 통해 state 업데이트 하면 다음 shouldComponentUpdate()에서 props, state 한번에 변경됨
   - ``shouldComponentUpdate()``
-    - return false하면 render 취소
+    - props, state 업데이트 시 다 호출됨 (인자로 newProps, newState 정보 받음)
+    - return false하면 render 취소 (default는 true 리턴)
     - 주로 성능 최적화 작업
-  - ``componentWillUpdate()``
+  - ``componentWillUpdate()``[deprecated_17]
     - 주의) 여기서 state 변경하면 props 업데이트 전에 또 shouldComponentUpdate가 발생하므로 state 변경 하지 말것
   - ``render()``
     - 변경된 props로 DOM에 업데이트 작업
   - ``componentDidUpdate()``
     - 업데이트 완료 시점에 호출
     - DOM 접근 가능
+- Component의 state 변경 관련 함수
+  - ``shouldComponentUpdate()``
+  - ``componentWillUpdate()``
+  - ``render()``
+  - ``componentDidUpdate()``
 
+</br>
+
+### \<Event>
+
+### \<Default Props>
+- props 값이 안들어오는 경우에 default로 설정해줄 값 지정하는 방법
+#### Class Component
+- class 내부에 static defaultProps 지정
+```js
+/*
+* App.tsx
+*/
+...
+export interface AppProps {
+  name : string;
+  company? : string;
+}
+...
+class App extends React.Component<AppProps, AppState> {
+  static defaultProps = {
+    company : 'something'
+  };
+  
+  constructor(props : AppProps) {
+    super(props);
+    this.state = {
+      age : 35
+    };
+  }
+  render() {
+    return (
+      <div className="App">
+        {this.props.name}, {this.props.company}, {this.state.age}
+        <StatelessComponent name="Anna"/>  //Stateless Component
+      </div>
+    );
+  }
+}
+...
+```
+#### Function Component
+- 해당 SFC의 defaultProps를 지정
+- 방법1
+```js
+/*
+* App.tsx
+*/
+...
+const StatelessComponent : React.SFC<AppProps> = {props} => {
+  return {
+    <h2>{props.name}, [props.company}</h2>
+  };
+};
+
+StatelessComponent.defaultProps = {
+  company : 'Home'
+};
+...
+```
+- 방법2
+```js
+/*
+* App.tsx
+*/
+...
+const StatelessComponent : React.SFC<AppProps> = {name, company = "Home"} => {
+  return {
+    <h2>{name}, [company}</h2>
+  };
+};
+...
+```
