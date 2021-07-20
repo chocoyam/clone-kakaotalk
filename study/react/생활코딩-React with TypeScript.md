@@ -104,6 +104,9 @@ ReactDOM.render(
 registerServiceWorker();
 ```
 
+#### React.PureComponent 상속
+
+
 #### Stateless Component
 ```js
 /*
@@ -271,4 +274,32 @@ const StatelessComponent : React.SFC<AppProps> = {name, company = "Home"} => {
 
 </br>
 
-### \<Component 변경하기>
+### \<하위/상위 Component 변경하기>
+#### 계층 구조
+> - Grand Parent
+>   - Parent
+>     - Me
+>       - Child
+>   - \<button></button>   
+#### 하위 Component 변경
+- 위와 같은 계층 구조일 때, 버튼 클릭으로 Child를 변경하려면?
+  - Grand Parent에서 button에 onClick 이벤트 만들고 Grand Parent의 state 변경
+  - Grand Parent에서 Parent -> Me -> Child 를 거쳐 props를 전달해야 함
+#### 상위 Component 변경
+- 위와 같은 계층 구조일 떄, Child에 있는 button을 클릭하여 \<p> 태그를 변경하려면?
+  - Grand Parent에서 \<p> 태그에 쓰이는 state를 변경하는 함수 생성
+  - Grand Parent에서 생성한 함수를 props에 넣고 Parent -> Me -> Child 로 props 전달 
+  - Child에서는 button onClick 이벤트에 props로 받은 함수를 지정
+#### 결론 -> Component Tree Depth가 깊어질수록 너무 복잡해짐 -> Redux, Mobx 사용하자! 
+
+</br>
+
+### \<Composition? Inheritance?>
+``"Facebook은 수천개의 컴포넌트에서 React를 사용하며, 컴포넌트 상속 계층을 사용하는 것이 권장되는 use case를 찾지 못했습니다."``
+``"컴포넌트에서 UI 이외의 기능을 재사용하고 싶으면, 상속을 이용하지 말고 자바스크립트 모듈로 분리해서 사용하는 것이 좋다."``
+
+- Composition의 기본은 props의 활용
+  - ex) SplitView 처럼 어떤 Component의 props에 left-component와 right-component를 지정하면, 그 Component의 왼쪽 관련 작업은 left-component가, 오른쪽 관련 작업은 right-component가 수행하도록 두는 것
+
+
+
