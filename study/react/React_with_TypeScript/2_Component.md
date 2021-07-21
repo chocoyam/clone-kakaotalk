@@ -1,4 +1,4 @@
-
+## [React with TypeScript](https://www.inflearn.com/course/react-with-typescript/dashboard)
 ### \<Component 생성>
 - 종류
   > - React.Component 상속
