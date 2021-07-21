@@ -105,9 +105,14 @@ registerServiceWorker();
 ```
 
 #### React.PureComponent 상속
-
+- props, state가 변경되면 Lifecycle 중 shouldComponentUpdate()에서 shallow compare에 따라 render() 수행 여부 결정
+  - shallow compare : reference 값이 변경 됐을 경우에만 render() 수행. reference 대상의 nested object 값의 변경은 감지 못함
+  - 즉 nested object 값만 변경했을 경우 reference object 전체를 copy해서 props/state로 넘겨야함
+  - 번거롭기 떄문에 immutable.js라고 nested object 변경 하면 새로 reference 값만 바꿔서 주는 것을 사용
+- PureComponent를 사용한다고 성능상 이점이 있는건 아님
 
 #### Stateless Component
+- React.Component, React.PureComponent 보다 속도가 빠름
 ```js
 /*
 * App.tsx
@@ -291,6 +296,7 @@ const StatelessComponent : React.SFC<AppProps> = {name, company = "Home"} => {
   - Grand Parent에서 생성한 함수를 props에 넣고 Parent -> Me -> Child 로 props 전달 
   - Child에서는 button onClick 이벤트에 props로 받은 함수를 지정
 #### 결론 -> Component Tree Depth가 깊어질수록 너무 복잡해짐 -> Redux, Mobx 사용하자! 
+#### [ref?](https://ko.reactjs.org/docs/refs-and-the-dom.html) 하위 Component에 있는 DOM을 reference 하게 해서 상위에서 그 DOM에 작업을 할 수 있게 해줌
 
 </br>
 
