@@ -1,5 +1,5 @@
 ## [React with TypeScript](https://www.inflearn.com/course/react-with-typescript/dashboard)
-### \<Component 생성>
+### 1. Component 생성
 - 종류
   > - React.Component 상속
   > - React.PureComponent 상속
@@ -84,7 +84,7 @@ const StatelessComponent : React.SFC<AppProps> = () => {
 
 </br>
 
-### [\<Lifecycle>](https://www.zerocho.com/category/React/post/579b5ec26958781500ed9955)
+### 2. [Lifecycle](https://www.zerocho.com/category/React/post/579b5ec26958781500ed9955)
 - Component를 class로 만들때 사용
 #### 종류
 - Component 생성, 마운트 관련 함수
@@ -125,7 +125,7 @@ const StatelessComponent : React.SFC<AppProps> = () => {
 
 </br>
 
-### \<Component에 Event 연결>
+### 3. Component에 Event 연결
 - DOM의 event명은 JSX에서는 낙타표기법으로
   - Ex) DOM onclick => JSX onClick
 - event 처리할 함수 연결
@@ -164,7 +164,7 @@ export default App;
 
 </br>
 
-### \<Default Props>
+### 4. Default Props
 - props 값이 안들어오는 경우에 default로 설정해줄 값 지정하는 방법
 #### Class Component
 - class 내부에 static defaultProps 지정
@@ -235,7 +235,7 @@ const StatelessComponent : React.SFC<AppProps> = {name, company = "Home"} => {
 
 </br>
 
-### \<하위/상위 Component 변경하기>
+### 5. 하위/상위 Component 변경하기
 #### 계층 구조
 > - Grand Parent
 >   - Parent
@@ -256,7 +256,7 @@ const StatelessComponent : React.SFC<AppProps> = {name, company = "Home"} => {
 
 </br>
 
-### \<Composition? Inheritance?>
+### 6. Composition? Inheritance?
 ``"Facebook은 수천개의 컴포넌트에서 React를 사용하며, 컴포넌트 상속 계층을 사용하는 것이 권장되는 use case를 찾지 못했습니다."``
 ``"컴포넌트에서 UI 이외의 기능을 재사용하고 싶으면, 상속을 이용하지 말고 자바스크립트 모듈로 분리해서 사용하는 것이 좋다."``
 
