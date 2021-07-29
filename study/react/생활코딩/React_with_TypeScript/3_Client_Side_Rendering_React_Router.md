@@ -18,15 +18,21 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 </br>
 
-### 2. Simple Coding
+### 2. Basic Concept with Simple Coding
 ```js
+const Home = () => {
+  return (
+    <h3>Home</h3>
+  )
+};
+
 class App extends React.Component<{}, {}> {
   render() {
     return (
       <Router>
       <div className="App">
         <h2>I always do rendering</h2>
-        <Route exact={true} path="/" render={() => <h3>Home</h3>}/>
+        <Route exact={true} path="/" component={Home}/>
         <Route path="/intro" render={() => <h3>소개</h3>}/>
         <nav>
           <ul>
@@ -53,3 +59,26 @@ class App extends React.Component<{}, {}> {
 
 #### cf... \<Link>
 - \<a>로 렌더링 되지만 실제 동작은 페이지 전체를 리로드하는 \<a>와 다르게 페이지에서 필요한 부분만 리로드
+
+</br>
+
+### 3. Router Props
+#### URL Parageter Routing
+``Route path="/post/:postId" component={Post}/>``   
+```js
+const Post = () => {
+  return (
+    <h3>Post</h3>
+  );
+}
+```
+
+- Route path에 :postId 파라미터 선언
+```js
+...
+<Route path="/posts/:postId" component={Post}/>
+...
+```
+
+
+
