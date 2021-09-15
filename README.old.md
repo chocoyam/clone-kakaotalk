@@ -1,1 +1,0 @@
-# kakaotalk clone project
