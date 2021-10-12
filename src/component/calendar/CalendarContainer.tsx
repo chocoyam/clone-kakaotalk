@@ -11,10 +11,16 @@ function CalendarContainer() {
     return (
         <div>
             <table style={headerStyle}>
+                <colgroup>
+                    <col style={{width:'14%'}}/>
+                    <col style={{width:'14%'}}/>
+                    <col style={{width:'14%'}}/>
+                    <col style={{width:'14%'}}/>
+                    <col style={{width:'14%'}}/>
+                    <col style={{width:'14%'}}/>
+                    <col style={{width:'14%'}}/>
+                </colgroup>
                 <CalendarHeader />
-                <CalendarBody />
-                <CalendarBody />
-                <CalendarBody />
                 <CalendarBody />
             </table>
         </div>

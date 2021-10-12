@@ -2,7 +2,7 @@ import React from 'react';
 
 function CalendarHeader() {
     return (
-        <tr>
+        <thead>
             <th>MON</th>
             <th>TUE</th>
             <th>WED</th>
@@ -10,7 +10,7 @@ function CalendarHeader() {
             <th>FRI</th>
             <th>SAT</th>
             <th>SUN</th>
-        </tr>
+        </thead>
     );
 };
 
