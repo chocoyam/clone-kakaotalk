@@ -1,5 +1,4 @@
 import { observable, action, computed } from 'mobx';
-import ScheduleModel from './ScheduleModel';
 
 interface DayModel {
     date: Date;
