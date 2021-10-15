@@ -2,6 +2,9 @@ import React from 'react';
 import { Card } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 
+import useStore from '../../store/UseStore';
+import { DayModel } from '../../store/ScheduleStore';
+
 interface DayProps {
     dayNumber : number,
     schedules? : string[]
@@ -25,12 +28,12 @@ const Day: React.FC<DayProps> = ({dayNumber, schedules}: DayProps) => {
     }
 };
 
-function getWeek(arr: Date[]) {
+function getWeek(arr: DayModel[]) {
     return (
         <tr>
             {
                 arr.map((day, i) => {
-                    return <td><Day dayNumber={day.getDate()} schedules={[]}></Day></td>;
+                    return <td><Day dayNumber={day.date.getDate()} schedules={[]}></Day></td>;
                 })
             }
         </tr>
@@ -38,22 +41,9 @@ function getWeek(arr: Date[]) {
 }
 
 function CalendarBody() {
-    const today = new Date();
-    const year = today.getFullYear()
-    const month = today.getMonth() + 1;
-    const date = today.getDate();
-    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-    const curDay = new Date(today.getFullYear(), today.getMonth(), 1);
-    const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-    const days = lastDay.getDate() - firstDay.getDate() + 1;
-    const dayModel: Date[] = [];
-
-    for (let i = 0; i < firstDay.getDay(); i++) {
-        dayModel.push(new Date(curDay.setDate(curDay.getDate() - curDay.getDay() + i)));
-    }
-    for (let i = 0; i < days; i++) {
-        dayModel.push(new Date(curDay.setDate(curDay.getDate() + 1)));
-    }
+    const { scheduleStore } = useStore();
+    console.log(scheduleStore.dayModels);
+    const dayModel = scheduleStore.dayModels;
 
     return (
         <tbody>

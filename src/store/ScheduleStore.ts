@@ -1,6 +1,6 @@
 import { observable, action, computed } from 'mobx';
 
-interface DayModel {
+export interface DayModel {
     date: Date;
     schedules: ScheduleModel[];
 }
@@ -17,10 +17,23 @@ interface ScheduleModel {
 }
 
 class ScheduleStore {
-    private dayModels: DayModel[];
+    public dayModels: DayModel[];
 
     constructor() {
         this.dayModels = [];
+
+        const today = new Date();
+        const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+        const curDay = new Date(today.getFullYear(), today.getMonth(), 1);
+        const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        const days = lastDay.getDate() - firstDay.getDate() + 1;
+    
+        for (let i = 0; i < firstDay.getDay(); i++) {
+            this.makeDayModel(new Date(curDay.setDate(curDay.getDate() - curDay.getDay() + i)));
+        }
+        for (let i = 0; i < days; i++) {
+            this.makeDayModel(new Date(curDay.setDate(curDay.getDate() - curDay.getDay() + i)));
+        }
     }
 
     public makeDayModel(date: Date) {

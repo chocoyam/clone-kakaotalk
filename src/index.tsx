@@ -1,13 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'mobx-react';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
+import RootStore, { StoreProvider } from './store/RootStore';
 import CalendarContainer from './component/calendar/CalendarContainer';
+
+const store = new RootStore();
 
 ReactDOM.render(
   <React.StrictMode>
-    <CalendarContainer />
+    <StoreProvider value={store}>
+      <CalendarContainer />
+    </StoreProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
