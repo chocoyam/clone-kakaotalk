@@ -24,15 +24,17 @@ class ScheduleStore {
 
         const today = new Date();
         const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-        const curDay = new Date(today.getFullYear(), today.getMonth(), 1);
         const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-        const days = lastDay.getDate() - firstDay.getDate() + 1;
-    
-        for (let i = 0; i < firstDay.getDay(); i++) {
-            this.makeDayModel(new Date(curDay.setDate(curDay.getDate() - curDay.getDay() + i)));
-        }
+        const lastMonthDays = firstDay.getDay();
+        const curMonthDays = lastDay.getDate() - firstDay.getDate();
+        const nextMonthDays = 6 - lastDay.getDay();
+        const days = lastMonthDays + curMonthDays + nextMonthDays;
+
+        const curDay = new Date(today.getFullYear(), today.getMonth(), 1);  // 날짜 계산을 위한 Date 객체
+        this.makeDayModel(new Date(curDay.setDate(curDay.getDate() - curDay.getDay())));
+
         for (let i = 0; i < days; i++) {
-            this.makeDayModel(new Date(curDay.setDate(curDay.getDate() - curDay.getDay() + i)));
+            this.makeDayModel(new Date(curDay.setDate(curDay.getDate() + 1)));
         }
     }
 

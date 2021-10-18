@@ -42,7 +42,6 @@ function getWeek(arr: DayModel[]) {
 
 function CalendarBody() {
     const { scheduleStore } = useStore();
-    console.log(scheduleStore.dayModels);
     const dayModel = scheduleStore.dayModels;
 
     return (
